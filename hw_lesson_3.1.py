@@ -5,36 +5,27 @@
 # 3) Если пользователь проиграл, то отправляете данную фотографию https://media.makeameme.org/created/sorry-you-lose.jpg
 
 from aiogram import Bot, Dispatcher, types, executor
-from configs import token 
+import random
+from config_random import token 
 
-bot = Bot(token = '6240537582:AAG5YYtba435dpm_d7X3U36OhnZG1Cs5GHw')
+bot = Bot(token)
 dp = Dispatcher(bot)
 
 @dp.message_handler(commands = 'start')
 async def star(message:types.Message):
     await message.answer("Я загадал число от 1 до 3 угадайте!!!")
 
-# import random
-# def guess(update, context):
-#     user_number = int(update.message.text)
-#     bot_number = random.randint(1, 3)
+@dp.message_handler(text = ['1', '2', '3'])
+async def num(message:types.Message):
+    number = random.randint(1,3)
+    if int(message.text) == number:
+
+        await message.answer(f"Вы угадали, Бот выбрал: {number}")
+        await message.answer_photo("https://media.makeameme.org/created/you-win-nothing-b744e1771f.jpg")
+    else:
+        await message.answer(f"Вы неугадали, Бот выбрал: {number}")
+        await message.answer_photo("https://media.makeameme.org/created/sorry-you-lose.jpg")
     
-#     if user_number == bot_number:
-#         context.bot.send_message(chat_id=update.effective_chat.id, text='Правильно, вы отгадали!')
-#         context.bot.send_photo(chat_id=update.effective_chat.id, photo='https://media.makeameme.org/created/you-win-nothing-b744e1771f.jpg')
-#     else:
-#         context.bot.send_message(chat_id=update.effective_chat.id, text=f'Извините, вы не угадали. Я загадал число {bot_number}')
-#         context.bot.send_photo(chat_id=update.effective_chat.id, photo='https://media.makeameme.org/created/sorry-you-lose.jpg')
-
-# # Создание объекта Updater и передача токена бота
-# updater = Updater(token='YOUR_BOT_TOKEN', use_context=True)
-
-# # Создание диспетчера и привязка обработчиков команд и сообщений
-# dispatcher = updater.dispatcher
-# dispatcher.add_handler(CommandHandler('start', start))
-# dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, guess))
-
-# # Запуск бота
 executor.start_polling(dp)
 
 
