@@ -1,7 +1,7 @@
 venv/
 __pycache__/
-configs.py/
-config_randon.py/
-config.py/
+configs.py
+config_random.py
+config.py
 
 
