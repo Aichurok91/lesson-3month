@@ -205,7 +205,7 @@ async def process_food4(message: types.Message, state: FSMContext):
     ''', (name, title, phone_number, address))
     connection.commit()
 
-    await message.answer("Ваш заказ принять.\nЖдите он никогда не приедет")
+    await message.answer("Ваш заказ принять.\nЖдите он никогда не приедет :)")
     await state.finish()
 
 executor.start_polling(dp)
